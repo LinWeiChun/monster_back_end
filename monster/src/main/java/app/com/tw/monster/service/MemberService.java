@@ -87,7 +87,7 @@ public class MemberService {
         // 取得原有會員資料
         Member existingMember = existingMemberOpt.get();
 
-        System.out.println(member.getMpPassword() == null && member.getMpPassword().equals(""));
+//        System.out.println(member.getMpPassword() == null && member.getMpPassword().equals(""));
         // 僅更新 JSON 中不為 null 的欄位
         if (!(member.getMpPassword() == null && member.getMpPassword().equals(""))) {
             existingMember.setMpPassword(setCode.sha256(member.getMpPassword()));

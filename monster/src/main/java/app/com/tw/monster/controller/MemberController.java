@@ -59,7 +59,7 @@ public class MemberController {
         try {
             member = memberService.modify(member);
             result.put("result", true);
-            result.put("errorCode", 200);
+            result.put("errorCode", 200);   
             result.put("message", "修改成功");
 
             ObjectNode dataNode = result.putObject("data");
