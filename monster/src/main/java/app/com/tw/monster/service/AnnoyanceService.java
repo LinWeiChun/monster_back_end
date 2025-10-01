@@ -24,6 +24,14 @@ public class AnnoyanceService {
         return annoyanceDAO.findAll();
     }
 
+    public List<Annoyance> getAnnoyanceByAccount(String account) {
+        Member member = memberDAO.findByMpAccount(account).orElse(null);
+        if (member == null) {
+            throw new IllegalArgumentException("帳號資訊錯誤");
+        }
+        return annoyanceDAO.findByMpId(member.getMpId());
+    }
+
     public void addAnnoyance(Annoyance annoyance) {
         if (annoyance.getMpId() == null || annoyance.getMpId().isEmpty()) {
             throw new IllegalArgumentException("請先登入後再進行煩惱紀錄！");

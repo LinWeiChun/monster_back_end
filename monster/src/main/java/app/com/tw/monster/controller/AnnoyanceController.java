@@ -25,6 +25,11 @@ public class AnnoyanceController {
         return annoyanceService.getAllAnnoyance();
     }
 
+    @GetMapping(path = "/{account}", produces = "application/json; charset=UTF-8")
+    public List<Annoyance> getAnnoyanceByAccount(@PathVariable(name = "account") String account) {
+        return annoyanceService.getAnnoyanceByAccount(account);
+    }
+
     @PostMapping(path = "/add", produces = "application/json; charset=UTF-8")
     public String addUser(@RequestBody Annoyance annoyance) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
