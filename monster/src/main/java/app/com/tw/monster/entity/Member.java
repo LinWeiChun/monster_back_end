@@ -18,9 +18,10 @@ public class Member {
 
     private String mpAccount = "";
     private String mpPassword = "";
+    private String mpName = "";
     private String mpEmail = "";
     private String mpBirthday = "";
-        private String mpNickname = "";
+    private String mpNickname = "";
     private String mpConfirmCode = "";
     private String mpStatus = "Y";
     private String mpCreatedate;
