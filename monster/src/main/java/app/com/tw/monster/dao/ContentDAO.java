@@ -12,4 +12,5 @@ public interface ContentDAO extends JpaRepository<Content, String> {
     Optional<Content> findByCpIdAndMpId(String id, String mpId);
     List<Content> findByMpId(String mpId);
     List<Content> findByCpCode(String cpCode);
+    List<Content> findByMpIdAndCpCode(String mpId, String cpCode);
 }

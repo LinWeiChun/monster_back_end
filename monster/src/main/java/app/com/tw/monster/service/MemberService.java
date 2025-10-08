@@ -38,6 +38,8 @@ public class MemberService {
             throw new IllegalArgumentException("帳號已被使用！");
         }else if(member.getMpPassword()==null || member.getMpPassword().isEmpty()) {
             throw new IllegalArgumentException("密碼不能為空！");
+        }else if(member.getMpName()==null || member.getMpName().isEmpty()) {
+            throw new IllegalArgumentException("名稱不能為空！");
         }else if(member.getMpEmail() == null || member.getMpEmail().isEmpty()) {
             throw new IllegalArgumentException("E-mail不能為空！");
         }else if (memberDAO.findByMpEmail(member.getMpEmail()).isPresent()) {

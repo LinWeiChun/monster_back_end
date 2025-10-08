@@ -40,20 +40,32 @@ public class ContentService {
         return contentDAO.findByMpId(member.getMpId());
     }
 
-    public void addContent(Content content) {
-        if (content.getMpId() == null || content.getMpId().isEmpty()) {
-            throw new IllegalArgumentException("請先登入後再進行煩惱紀錄或日記填寫！");
-        } else if ((content.getCpContent() == null || content.getCpContent().isEmpty()) &&
+    public List<Content> getContentByAccountAndCode(String account, String code) {
+        Member member = memberDAO.findByMpAccount(account).orElse(null);
+        if (member == null) {
+            throw new IllegalArgumentException("帳號資訊錯誤");
+        }
+        return contentDAO.findByMpIdAndCpCode(member.getMpId(), code);
+    }
+
+
+    public void addContent(String account, Content content) {
+
+        Member member = memberDAO.findByMpAccount(account).orElse(null);
+        if (member == null) {
+            throw new IllegalArgumentException("帳號資訊錯誤");
+        }
+
+        if ((content.getCpContent() == null || content.getCpContent().isEmpty()) &&
                 (content.getCpFile() == null || content.getCpFile().isEmpty())) {
             throw new IllegalArgumentException("請輸入煩惱/日記內容！");
         } else if (content.getCpIndex() == null && content.getCpCode().equals("annoyance")) {
             throw new IllegalArgumentException("請為您的煩惱打個分數");
         } else if (content.getCpShare() == null || content.getCpShare().isEmpty()) {
             throw new IllegalArgumentException("請選擇使否需要分享");
-        } else if (memberDAO.findById(content.getMpId()).isEmpty()) {
-            throw new IllegalArgumentException("帳號不存在");
         }
         content.generateCpId();
+        content.setMpId(member.getMpId());
 
         contentDAO.save(content);
     }
