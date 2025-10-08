@@ -1,7 +1,7 @@
 package app.com.tw.monster.controller;
 
-import app.com.tw.monster.entity.Annoyance;
-import app.com.tw.monster.service.AnnoyanceService;
+import app.com.tw.monster.entity.Content;
+import app.com.tw.monster.service.ContentService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -11,32 +11,42 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/annoyance")
-public class AnnoyanceController {
-    private final AnnoyanceService annoyanceService;
+@RequestMapping("/content")
+public class ContentController {
+    private final ContentService contentService;
 
     @Autowired
-    public AnnoyanceController(AnnoyanceService annoyanceService) {
-        this.annoyanceService = annoyanceService;
+    public ContentController(ContentService contentService) {
+        this.contentService = contentService;
     }
 
     @GetMapping(path = "/all")
-    public List<Annoyance> getAllAnnoyance() {
-        return annoyanceService.getAllAnnoyance();
+    public List<Content> getAllContent() {
+        return contentService.getAllContent();
+    }
+
+    @GetMapping(path = "/all/annoyance")
+    public List<Content> getAllAnnoyance() {
+        return contentService.getAllContent();
+    }
+
+    @GetMapping(path = "/all/diary")
+    public List<Content> getAllDiary() {
+        return contentService.getAllContent();
     }
 
     @GetMapping(path = "/{account}", produces = "application/json; charset=UTF-8")
-    public List<Annoyance> getAnnoyanceByAccount(@PathVariable(name = "account") String account) {
-        return annoyanceService.getAnnoyanceByAccount(account);
+    public List<Content> getContentByAccount(@PathVariable(name = "account") String account) {
+        return contentService.getContentByAccount(account);
     }
 
     @PostMapping(path = "/add", produces = "application/json; charset=UTF-8")
-    public String addUser(@RequestBody Annoyance annoyance) throws JsonProcessingException {
+    public String addUser(@RequestBody Content content) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
 
         try {
-            annoyanceService.addAnnoyance(annoyance);
+            contentService.addContent(content);
             result.put("result", true);
             result.put("errorCode", 200);
             result.put("message", "新增成功");
@@ -54,13 +64,13 @@ public class AnnoyanceController {
     public String modifyAnnoyance(
             @PathVariable(name = "id") String id,
             @PathVariable(name = "account") String account,
-            @RequestBody Annoyance annoyance) throws JsonProcessingException {
+            @RequestBody Content content) throws JsonProcessingException {
 
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode result = mapper.createObjectNode();
 
         try {
-            annoyanceService.modifyAnnoyance(id, account, annoyance);
+            contentService.modifyAnnoyance(id, account, content);
 
             result.put("result", true);
             result.put("errorCode", 200);
