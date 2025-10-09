@@ -128,7 +128,7 @@ public class MemberService {
             throw new IllegalArgumentException("會員資訊錯誤！");
         }
     }
-    public boolean confirm(String mpEmail, String confirmCode) {
+    public void confirm(String mpEmail, String confirmCode) {
         Member member = memberDAO.findByMpEmail(mpEmail).orElse(null);
         if (member == null) {
             throw new IllegalArgumentException("E-mail不存在");
@@ -136,10 +136,9 @@ public class MemberService {
         if (!confirmCode.equals(member.getMpConfirmCode())){
             throw new IllegalArgumentException("驗證碼錯誤");
         }
-        return true;
     }
 
-    public boolean change(String mpEmail, String mpPassword, String checkPassword) {
+    public void change(String mpEmail, String mpPassword, String checkPassword) {
         Member member = memberDAO.findByMpEmail(mpEmail).orElse(null);
         if (member == null) {
             throw new IllegalArgumentException("E-mail不存在");
@@ -153,7 +152,6 @@ public class MemberService {
         }
         member.setMpPassword(encryptedPassword);
         memberDAO.save(member);
-        return true;
     }
 
 

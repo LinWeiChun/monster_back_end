@@ -20,7 +20,7 @@ public class Content {
     private String cpContent = "";
     private String cpFile = "";
     private Integer cpType = 0;
-    private String moId = "";
+    private String miId = "";
     private String cpMood = "";
     private Integer cpIndex = 1;
     private String cpSolve = "N";
