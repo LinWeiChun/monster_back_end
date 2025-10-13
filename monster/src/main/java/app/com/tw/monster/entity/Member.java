@@ -22,6 +22,7 @@ public class Member {
     private String mpEmail = "";
     private String mpBirthday = "";
     private String mpNickname = "";
+    private String pmId = "";
     private String mpConfirmCode = "";
     private String mpStatus = "Y";
     private String mpCreatedate;

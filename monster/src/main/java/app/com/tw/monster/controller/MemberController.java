@@ -1,5 +1,6 @@
 package app.com.tw.monster.controller;
 import app.com.tw.monster.entity.Member;
+import app.com.tw.monster.security.annotation.DevOnly;
 import app.com.tw.monster.service.MemberService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,6 +22,7 @@ public class MemberController {
     }
 
     @GetMapping(path = "/all")
+    @DevOnly
     public List<Member> getAllMembers() {
         return memberService.getAllMembers();
     }
@@ -37,10 +39,11 @@ public class MemberController {
             result.put("message", "新增成功");
 
             ObjectNode dataNode = result.putObject("data");
-            dataNode.put("account", member.getMpAccount());
-            dataNode.put("email", member.getMpEmail());
-            dataNode.put("birthday", member.getMpBirthday());
-            dataNode.put("nickName", member.getMpNickname());
+            dataNode.put("mpAccount", member.getMpAccount());
+            dataNode.put("mpName", member.getMpName());
+            dataNode.put("mpEmail", member.getMpEmail());
+            dataNode.put("mpBirthday", member.getMpBirthday());
+            dataNode.put("mpNickName", member.getMpNickname());
 
         } catch (IllegalArgumentException e) {
             result.put("result", false);
@@ -63,10 +66,11 @@ public class MemberController {
             result.put("message", "修改成功");
 
             ObjectNode dataNode = result.putObject("data");
-            dataNode.put("account", member.getMpAccount());
-            dataNode.put("email", member.getMpEmail());
-            dataNode.put("birthday", member.getMpBirthday());
-            dataNode.put("nickName", member.getMpNickname());
+            dataNode.put("mpAccount", member.getMpAccount());
+            dataNode.put("mpName", member.getMpName());
+            dataNode.put("mpEmail", member.getMpEmail());
+            dataNode.put("mpBirthday", member.getMpBirthday());
+            dataNode.put("mpNickName", member.getMpNickname());
 
         } catch (IllegalArgumentException e) {
             result.put("result", false);
@@ -96,10 +100,11 @@ public class MemberController {
             result.put("message", "登入成功");
 
             ObjectNode dataNode = result.putObject("data");
-            dataNode.put("account", member.getMpAccount());
-            dataNode.put("email", member.getMpEmail());
-            dataNode.put("birthday", member.getMpBirthday());
-            dataNode.put("nickName", member.getMpNickname());
+            dataNode.put("mpAccount", member.getMpAccount());
+            dataNode.put("mpName", member.getMpName());
+            dataNode.put("mpEmail", member.getMpEmail());
+            dataNode.put("mpBirthday", member.getMpBirthday());
+            dataNode.put("mpNickName", member.getMpNickname());
 
         } catch (IllegalArgumentException e) {
             result.put("result", false);

@@ -5,6 +5,8 @@ import app.com.tw.monster.dao.MemberDAO;
 import app.com.tw.monster.entity.Content;
 import app.com.tw.monster.entity.Member;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,20 +34,20 @@ public class ContentService {
         return contentDAO.findByCpCode("diary");
     }
 
-    public List<Content> getContentByAccount(String account) {
+    public Page<Content> getContentByAccount(String account, Pageable pageable) {
         Member member = memberDAO.findByMpAccount(account).orElse(null);
         if (member == null) {
             throw new IllegalArgumentException("帳號資訊錯誤");
         }
-        return contentDAO.findByMpId(member.getMpId());
+        return contentDAO.findByMpId(member.getMpId(), pageable);
     }
 
-    public List<Content> getContentByAccountAndCode(String account, String code) {
+    public Page<Content> getContentByAccountAndCode(String account, String code, Pageable pageable) {
         Member member = memberDAO.findByMpAccount(account).orElse(null);
         if (member == null) {
             throw new IllegalArgumentException("帳號資訊錯誤");
         }
-        return contentDAO.findByMpIdAndCpCode(member.getMpId(), code);
+        return contentDAO.findByMpIdAndCpCode(member.getMpId(), code, pageable);
     }
 
 

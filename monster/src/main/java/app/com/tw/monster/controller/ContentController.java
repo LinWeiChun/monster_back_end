@@ -7,6 +7,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -42,25 +45,46 @@ public class ContentController {
     }
 
     @GetMapping(path = "/{account}", produces = "application/json; charset=UTF-8")
-    public Map<String, Object> getContentByAccount(@PathVariable(name = "account") String account) {
-        List<Content> contentList = contentService.getContentByAccount(account);
+    public Map<String, Object> getContentByAccount(
+            @PathVariable(name = "account") String account,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Content> contentPage = contentService.getContentByAccount(account, pageable);
+
         Map<String, Object> result = new HashMap<>();
         result.put("result", true);
         result.put("errorCode", 200);
-        result.put("message", contentList.isEmpty() ? "查無資料" : "查尋成功");
-        result.put("data", contentList);
+        result.put("message", contentPage.isEmpty() ? "查無資料" : "查詢成功");
+        result.put("data", contentPage.getContent());
+        result.put("totalElements", contentPage.getTotalElements());
+        result.put("totalPages", contentPage.getTotalPages());
+        result.put("currentPage", contentPage.getNumber());
         return result;
     }
+
     @GetMapping(path = "/{account}/{code}", produces = "application/json; charset=UTF-8")
-    public Map<String, Object>  getContentByAccountAndCode(@PathVariable(name = "account") String account,@PathVariable(name = "code") String code) {
-        List<Content> contentList = contentService.getContentByAccountAndCode(account, code);
+    public Map<String, Object> getContentByAccountAndCode(
+            @PathVariable(name = "account") String account,
+            @PathVariable(name = "code") String code,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Content> contentPage = contentService.getContentByAccountAndCode(account, code, pageable);
+
         Map<String, Object> result = new HashMap<>();
         result.put("result", true);
         result.put("errorCode", 200);
-        result.put("message", contentList.isEmpty() ? "查無資料" : "查尋成功");
-        result.put("data", contentList);
+        result.put("message", contentPage.isEmpty() ? "查無資料" : "查詢成功");
+        result.put("data", contentPage.getContent());
+        result.put("totalElements", contentPage.getTotalElements());
+        result.put("totalPages", contentPage.getTotalPages());
+        result.put("currentPage", contentPage.getNumber());
         return result;
     }
+
 
 
     @PostMapping(path = "/add/{account}", produces = "application/json; charset=UTF-8")
