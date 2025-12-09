@@ -155,11 +155,11 @@ public class MemberService {
     }
 
 
-    private void sendResetEmail(String to, String confirmCode) throws MessagingException {
+    public void sendResetEmail(String to, String confirmCode) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-        helper.setFrom("linweijun0528@gmail.com");
+        helper.setFrom("linweijun0528@gmail.com"); // 必須在 SendGrid 驗證過
         helper.setTo(to);
         helper.setSubject("重設密碼確認碼");
         helper.setText(
